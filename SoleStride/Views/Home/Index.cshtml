@@ -1,8 +1,61 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model IEnumerable<SoleStride.Models.Shoes>
+
+@{
+    ViewData["Title"] = "Index";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<h1>Shoe Catalogue</h1>
+
+@if (Context.Session.GetString("Role") == "Staff" || Context.Session.GetString("Role") == "Admin")
+{
+    <span>
+        <a asp-controller="Shoes" asp-action="Create" class="btn btn-primary">Add New Product</a>
+    </span>
+    if (Context.Session.GetString("Role") == "Admin")
+    {
+        <span>
+            <a asp-controller="Category" asp-action="Create" class="btn btn-secondary">Add A Category</a>
+        </span>
+    }
+    <hr />
+}
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    @if (!Model.Any())
+    {
+        <div class="col">
+            <div class="alert alert-info" role="alert">
+                No shoes available.
+            </div>
+        </div>
+    }
+    @foreach (var item in Model)
+    {
+        <div class="col">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">@Html.DisplayFor(model => item.ShoesName)</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">@Html.DisplayFor(model => item.SkuId)</h6>
+                    <p class="card-text">
+                        <strong>Category:</strong> @Html.DisplayFor(model => item.Category)<br />
+                        <strong>Category ID:</strong> @Html.DisplayFor(model => item.CategoryId)<br />
+                        <strong>Gender:</strong> @Html.DisplayFor(model => item.ShoesGender)<br />
+                        <strong>Size:</strong> @Html.DisplayFor(model => item.ShoesSize)<br />
+                        <strong>Material:</strong> @Html.DisplayFor(model => item.Material)<br />
+                        <strong>Description:</strong> @Html.DisplayFor(model => item.Description)<br />
+                        <strong>Price:</strong> @Html.DisplayFor(model => item.Price)<br />
+                        <strong>Sale:</strong> @Html.DisplayFor(model => item.SalePercentage)%
+                    </p>
+                </div>
+                @if (Context.Session.GetString("Role") == "2")
+                {
+                    <div class="card-footer bg-transparent">
+                        <a asp-action="Edit" asp-route-id="@item.ProductId" class="btn btn-sm btn-outline-primary">Edit</a>
+                        <a asp-action="Details" asp-route-id="@item.ProductId" class="btn btn-sm btn-outline-secondary">Details</a>
+                        <a asp-action="Delete" asp-route-id="@item.ProductId" class="btn btn-sm btn-outline-danger">Delete</a>
+                    </div>
+                }
+            </div>
+        </div>
+    }
 </div>

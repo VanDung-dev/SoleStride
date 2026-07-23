@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SoleStride.Models;
 using System.Diagnostics;
 
@@ -6,9 +7,21 @@ namespace SoleStride.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly SoleStrideDbContext _context;
+
+        public HomeController(SoleStrideDbContext context)
         {
-            return View();
+            _context = context;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var shoes = await _context.Shoes
+                .Include(s => s.Category)
+                .OrderBy(s => s.ShoesName)
+                .ToListAsync();
+
+            return View(shoes);
         }
 
         public IActionResult Privacy()

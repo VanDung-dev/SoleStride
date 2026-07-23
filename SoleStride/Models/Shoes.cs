@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
 
@@ -31,6 +32,7 @@ namespace SoleStride.Models
             Unisex
         }
         [Required]
+        [DisplayName("Shoes Gender")]
         public Gender ShoesGender { get; set; }
 
         [Required]

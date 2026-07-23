@@ -4,6 +4,7 @@ namespace SoleStride.Models
 {
     public class SoleStrideDbContext : DbContext
     {
+        public DbSet<SoleStride.Models.Category> Category { get; set; } = default!;
         public SoleStrideDbContext(DbContextOptions<SoleStrideDbContext> options) : base(options)
         {
         }

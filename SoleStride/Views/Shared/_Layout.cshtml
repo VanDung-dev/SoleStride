@@ -35,11 +35,11 @@
                                 </svg>
                                 @if (Context.Session.GetString("Username") != null)
                                 {
-                                    @Context.Session.GetString("Username")
+                                    <span>@Context.Session.GetString("Role"): @Context.Session.GetString("Username")</span>
                                 }
                                 else
                                 {
-                                    <span>Account</span>
+                                    <span>Guest</span>
                                 }
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end">
