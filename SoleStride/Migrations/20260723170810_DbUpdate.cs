@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SoleStride.Migrations
 {
     /// <inheritdoc />
-    public partial class ShoeMgmt : Migration
+    public partial class DbUpdate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -24,6 +24,23 @@ namespace SoleStride.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Username = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Role = table.Column<int>(type: "int", nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Birthdate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UserGender = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Username);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Shoes",
                 columns: table => new
                 {
@@ -33,6 +50,7 @@ namespace SoleStride.Migrations
                     CategoryId = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     ShoesGender = table.Column<int>(type: "int", nullable: false),
                     ShoesSize = table.Column<int>(type: "int", nullable: false),
+                    ShoesColor = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Material = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -87,6 +105,9 @@ namespace SoleStride.Migrations
         {
             migrationBuilder.DropTable(
                 name: "ShoeStocks");
+
+            migrationBuilder.DropTable(
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Shoes");

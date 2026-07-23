@@ -14,9 +14,8 @@ namespace SoleStride.Models
         [StringLength(100)]
         public string ShoesName { get; set; }
 
-        [Required]
         [StringLength(20)]
-        public string SkuId { get; set; }
+        public string? SkuId { get; set; }
 
         [ForeignKey(nameof(CategoryId))]
         public Category? Category { get; set; }
@@ -37,6 +36,9 @@ namespace SoleStride.Models
 
         [Required]
         public int ShoesSize { get; set; }
+
+        [Required]
+        public string ShoesColor { get; set; }
 
         [Required]
         public string Material { get; set; }

@@ -39,6 +39,7 @@ public class ShoesController : Controller
     // GET: SHOESS/Create
     public IActionResult Create()
     {
+        ViewBag.Categories = _context.Category.ToList();
         return View();
     }
 
@@ -47,14 +48,23 @@ public class ShoesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("ProductId,ShoesName,SkuId,Category,CategoryId,ShoesGender,ShoesSize,Material,Description,Price,SalePercentage")] Shoes shoes)
+    public async Task<IActionResult> Create([Bind("ProductId,ShoesName,Category,CategoryId,ShoesGender,ShoesSize,ShoesColor,Material,Description,Price,SalePercentage")] Shoes shoes)
     {
         if (ModelState.IsValid)
         {
+            var colorCode = string.IsNullOrWhiteSpace(shoes.ShoesColor) ? "XXX" : shoes.ShoesColor.Substring(0, Math.Min(3, shoes.ShoesColor.Length)).ToUpper();
+            shoes.SkuId = $"{shoes.CategoryId}-{shoes.ShoesGender.ToString().Substring(0, 1)}-{shoes.ShoesSize}-{colorCode}";
+
+            if (shoes.SalePercentage == null)
+            {
+                shoes.SalePercentage = 0;
+            }
+
             _context.Add(shoes);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Home");
         }
+        ViewBag.Categories = await _context.Category.ToListAsync();
         return View(shoes);
     }
 
@@ -79,7 +89,7 @@ public class ShoesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(System.Guid? productid, [Bind("ProductId,ShoesName,SkuId,Category,CategoryId,ShoesGender,ShoesSize,Material,Description,Price,SalePercentage")] Shoes shoes)
+    public async Task<IActionResult> Edit(System.Guid? productid, [Bind("ProductId,ShoesName,SkuId,Category,CategoryId,ShoesGender,ShoesSize,ShoesColor,Material,Description,Price,SalePercentage")] Shoes shoes)
     {
         if (productid != shoes.ProductId)
         {

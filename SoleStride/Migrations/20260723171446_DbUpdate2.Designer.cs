@@ -12,8 +12,8 @@ using SoleStride.Models;
 namespace SoleStride.Migrations
 {
     [DbContext(typeof(SoleStrideDbContext))]
-    [Migration("20260723053819_ShoeMgmt")]
-    partial class ShoeMgmt
+    [Migration("20260723171446_DbUpdate2")]
+    partial class DbUpdate2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -92,6 +92,10 @@ namespace SoleStride.Migrations
                     b.Property<float?>("SalePercentage")
                         .HasColumnType("real");
 
+                    b.Property<string>("ShoesColor")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("ShoesGender")
                         .HasColumnType("int");
 
@@ -104,7 +108,6 @@ namespace SoleStride.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("SkuId")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
