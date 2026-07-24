@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SoleStride.Models;
@@ -31,6 +32,8 @@ namespace SoleStride.Controllers
         {
             if (ModelState.IsValid)
             {
+                user.Role = Models.User.UserRole.User;
+
                 string passPlaintext = user.Password;
                 using (var sha256 = SHA256.Create())
                 {

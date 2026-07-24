@@ -1,56 +1,72 @@
 @model SoleStride.Models.Category
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Category";
 }
 
-<h1>Create</h1>
+<div class="page-header">
+    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" viewBox="0 0 16 16" style="color:#6c757d;">
+        <path d="m.5 3 .04.87a1.99 1.99 0 0 0 .342 1.311l.561 2.286a1 1 0 0 0 .95.684h11.34a1 1 0 0 0 .95-.684l.561-2.285a1.99 1.99 0 0 0 .342-1.31L13.5 3zM2 4.665v3.718a2 2 0 0 0 .5 1.311l5.15 2.66A2 2 0 0 0 9 13.133h7.5v-2.618a2 2 0 0 0-.5-1.311L9.35 6.685A2 2 0 0 0 8.5 4.665L2 4.665zM7.5 13.133a2 2 0 0 0 1.311-.5l5.15-2.66A2 2 0 0 0 14 10.383V4.665L7.5 8.18V13.133z"/>
+    </svg>
+    <h1>Create Category</h1>
+</div>
+<p class="page-subtitle">Add a new product category to organize your inventory.</p>
 
-<h4>Category</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="CategoryId" class="control-label"></label>
-                <input asp-for="CategoryId" class="form-control" />
-                <span asp-validation-for="CategoryId" class="text-danger"></span>
-            </div>
+<div class="form-card">
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger-custom"></div>
 
-            <div class="form-group">
-                <label asp-for="CategoryName" class="control-label"></label>
-                <input asp-for="CategoryName" class="form-control" />
-                <span asp-validation-for="CategoryName" class="text-danger"></span>
+        <div class="form-section">
+            <div class="form-section-title">Category Details</div>
+            <div class="form-row">
+                <div class="mb-3">
+                    <label asp-for="CategoryId" class="form-label-custom"></label>
+                    <input asp-for="CategoryId" class="form-control form-control-custom" />
+                    <span asp-validation-for="CategoryId" class="text-danger-custom"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="CategoryName" class="form-label-custom"></label>
+                    <input asp-for="CategoryName" class="form-control form-control-custom" />
+                    <span asp-validation-for="CategoryName" class="text-danger-custom"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
 
-        <table class="table">
+        <div class="d-flex gap-2 mt-4">
+            <button type="submit" class="btn btn-submit">Create Category</button>
+            <a asp-controller="Home" asp-action="Index" class="btn btn-back">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+                </svg>
+                Back to Catalog
+            </a>
+        </div>
+    </form>
+</div>
+
+@if (ViewBag.Categories != null && ((IEnumerable<SoleStride.Models.Category>)ViewBag.Categories).Any())
+{
+    <div class="table-custom mt-4">
+        <table class="table table-hover mb-0">
             <thead>
                 <tr>
                     <th>Category ID</th>
                     <th>Category Name</th>
-                    <th></th>
+                    <th style="width:100px;"></th>
                 </tr>
             </thead>
             <tbody>
-                @if (ViewBag.Categories != null)
+                @foreach (var item in (IEnumerable<SoleStride.Models.Category>)ViewBag.Categories)
                 {
-                    foreach (var item in ViewBag.Categories)
-                    {
-                        <tr>
-                            <td>@item.CategoryId</td>
-                            <td>@item.CategoryName</td>
-                            <td>
-                                <a asp-action="Delete" asp-route-categoryid="@item.CategoryId">Delete</a>
-                            </td>
-                        </tr>
-                    }
+                    <tr>
+                        <td><span class="badge bg-light text-dark border">@item.CategoryId</span></td>
+                        <td class="fw-medium">@item.CategoryName</td>
+                        <td>
+                            <a asp-action="Delete" asp-route-categoryid="@item.CategoryId" class="btn-delete-sm">Delete</a>
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>
     </div>
-</div>
+}

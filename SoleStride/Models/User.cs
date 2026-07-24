@@ -32,7 +32,7 @@ namespace SoleStride.Models
         [Required]
         public DateTime Birthdate { get; set; } = DateTime.Now - TimeSpan.FromDays(14 * 365);
 
-        public enum Gender { Male, Female }
+        public enum Gender { Male, Female, Other }
         [Required]
         public Gender UserGender { get; set; }
     }

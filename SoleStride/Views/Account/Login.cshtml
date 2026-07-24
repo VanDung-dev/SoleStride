@@ -1,28 +1,70 @@
 @{
     ViewData["Title"] = "Login";
+    Layout = null;
 }
 
-<div class="row justify-content-center">
-    <div class="col-md-4">
-        <div class="card shadow-sm mt-5">
-            <div class="card-body">
-                <h3 class="card-title text-center mb-4">Login</h3>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - SoleStride</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="auth-page">
+        <div class="auth-card">
+            <div class="auth-header">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                </svg>
+                <h1>Welcome back</h1>
+                <p>Sign in to your SoleStride account</p>
+            </div>
+            <div class="auth-body">
                 @if (ViewBag.Error != null)
                 {
-                    <div class="alert alert-danger">@ViewBag.Error</div>
+                    <div class="alert alert-danger alert-custom">@ViewBag.Error</div>
                 }
                 <form asp-action="Login" method="post">
-                    <div class="mb-3">
+                    <div class="form-floating-custom">
                         <label for="username" class="form-label">Username</label>
                         <input type="text" class="form-control" id="username" name="username" required autofocus />
                     </div>
-                    <div class="mb-3">
+                    <div class="form-floating-custom">
                         <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" required />
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="loginPassword" name="password" required />
+                            <button class="btn btn-outline-secondary" type="button" id="toggleLoginPassword" style="border-radius:0 12px 12px 0;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16" id="loginEyeIcon">
+                                    <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.607A10 10 0 0 0 8 5.5c1.757 0 3.35.56 4.65 1.56a13 13 0 0 1 1.66 2.607C12.797 10.953 10.586 11.5 8 11.5s-4.797-.547-6.17-1.5z"/>
+                                    <path d="M8 12.5a5 5 0 0 1-4.396-2.106c-.155.205-.372.44-.636.707A6.5 6.5 0 0 0 8 13.5c.78 0 1.52-.12 2.2-.334a8.96 8.96 0 0 1-.636-.707A5 5 0 0 1 8 12.5"/>
+                                </svg>
+                            </button>
+                        </div>
                     </div>
-                    <button type="submit" class="btn btn-primary w-100">Login</button>
+                    <button type="submit" class="btn btn-auth">Sign In</button>
                 </form>
-            </div>
-        </div>
-    </div>
+                <div class="auth-footer">
+                    Don't have an account? <a asp-action="Register">Create one</a>
 </div>
+</div>
+</div>
+
+<script>
+document.getElementById('toggleLoginPassword').addEventListener('click', function () {
+    var passwordInput = document.getElementById('loginPassword');
+    var eyeIcon = document.getElementById('loginEyeIcon');
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        eyeIcon.innerHTML = '<path d="M10.793 2.293a1 1 0 0 1 1.414 0l4 4a1 1 0 0 1 0 1.414l-7 7a1 1 0 0 1-1.414 0l-4-4a1 1 0 0 1 0-1.414l7-7zm-2 9.707a3 3 0 1 1 5.657-5.657 3 3 0 0 1-5.657 5.657z"/><path d="M1.173 8a13 13 0 0 1 1.66-2.607A10 10 0 0 0 8 5.5c1.757 0 3.35.56 4.65 1.56a13 13 0 0 1 1.66 2.607C12.797 10.953 10.586 11.5 8 11.5s-4.797-.547-6.17-1.5z"/>';
+    } else {
+        passwordInput.type = 'password';
+        eyeIcon.innerHTML = '<path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.607A10 10 0 0 0 8 5.5c1.757 0 3.35.56 4.65 1.56a13 13 0 0 1 1.66 2.607C12.797 10.953 10.586 11.5 8 11.5s-4.797-.547-6.17-1.5z"/><path d="M8 12.5a5 5 0 0 1-4.396-2.106c-.155.205-.372.44-.636.707A6.5 6.5 0 0 0 8 13.5c.78 0 1.52-.12 2.2-.334a8.96 8.96 0 0 1-.636-.707A5 5 0 0 1 8 12.5"/>';
+    }
+});
+</script>
+    </div>
+</body>
+</html>
