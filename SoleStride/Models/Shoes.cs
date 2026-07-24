@@ -48,6 +48,9 @@ namespace SoleStride.Models
         [Required]
         public decimal Price { get; set; }
 
+        [Range(0, 100, ErrorMessage = "Sale percentage must be between 0 and 100.")]
         public float? SalePercentage { get; set; }
+
+        public string? ImageUrl { get; set; }
     }
 }

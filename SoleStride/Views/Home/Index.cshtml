@@ -35,10 +35,13 @@
             <div class="card h-100">
                 <div class="card-body">
                     <h5 class="card-title">@Html.DisplayFor(model => item.ShoesName)</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">@Html.DisplayFor(model => item.SkuId)</h6>
+                    <h6 class="card-subtitle mb-5 small text-muted">@Html.DisplayFor(model => item.SkuId)</h6>
+                    @if (!string.IsNullOrEmpty(item.ImageUrl))
+                    {
+                        <img src="@item.ImageUrl" alt="@item.ShoesName" class="img-fluid mb-3" />
+                    }
                     <p class="card-text">
-                        <strong>Category:</strong> @Html.DisplayFor(model => item.Category)<br />
-                        <strong>Category ID:</strong> @Html.DisplayFor(model => item.CategoryId)<br />
+                        <strong>Category:</strong> @Html.DisplayFor(model => item.Category.CategoryName)<br />
                         <strong>Gender:</strong> @Html.DisplayFor(model => item.ShoesGender)<br />
                         <strong>Size:</strong> @Html.DisplayFor(model => item.ShoesSize)<br />
                         <strong>Color:</strong> @Html.DisplayFor(model => item.ShoesColor)<br />
